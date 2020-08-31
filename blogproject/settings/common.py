@@ -123,7 +123,10 @@ HAYSTACK_CONNECTIONS = {
 }
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
 
-enable = os.environ.get("ENABLE_HAYSTACK_REALTIME_SIGNAL_PROCESSOR", "yes")
+# 因为博客全文搜索功能依赖 Elasticsearch 服务，如果使用 Virtualenv 或者 Pipenv 启动项目而不想搭建 Elasticsearch 服务的话，
+# 请先设置环境变量 ENABLE_HAYSTACK_REALTIME_SIGNAL_PROCESSOR=no 以关闭实时索引，否则无法创建博客文章。如果关闭实时索引，全文搜索功能将不可用。
+# enable = os.environ.get("ENABLE_HAYSTACK_REALTIME_SIGNAL_PROCESSOR", "yes")
+enable = os.environ.get("ENABLE_HAYSTACK_REALTIME_SIGNAL_PROCESSOR", "no")
 if enable in {"true", "True", "yes"}:
     HAYSTACK_SIGNAL_PROCESSOR = "haystack.signals.RealtimeSignalProcessor"
 
